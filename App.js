@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'react-native';
+import './global.css';
+import { Provider } from 'react-redux';
+import { AuthProvider } from './src/context/authContext';
+import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './src/navigation/refNavigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import RootNavigator from './src/navigation/RootNavigator';
+import store from './src/store/store';
+import Loading from './src/shared/components/loading/Loading';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <AuthProvider>
+        <NavigationContainer ref={navigationRef}>
+          <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar backgroundColor="#FF8C00" barStyle="light-content" />
+            <RootNavigator />
+            <Loading />
+          </SafeAreaView>
+        </NavigationContainer>
+      </AuthProvider>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+``;

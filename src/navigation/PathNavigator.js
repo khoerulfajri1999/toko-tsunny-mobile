@@ -1,0 +1,14 @@
+const SCREEN_PATH = {
+  LOGIN: 'LOGIN_SCREEN',
+  REGISTER: 'REGISTER_SCREEN',
+  DASHBOARD: 'DASHBOARD_SCREEN',
+  MAIN_APP: 'MAIN_APP',
+};
+
+const TAB_PATH = {
+  DASHBOARD: 'Dashboard',
+  PRODUCT: 'Product',
+  TRANSACTION: 'Transaction',
+};
+
+export { SCREEN_PATH, TAB_PATH };
