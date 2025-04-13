@@ -19,6 +19,7 @@ const LoginScreen = ({ navigation }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [errors, setErrors] = useState({});
@@ -72,7 +73,7 @@ const LoginScreen = ({ navigation }) => {
           <View style={styles.logoContainer}>
             <Image
               style={styles.logo}
-              source={require('../../shared/assets/login.png')}
+              source={require('../../shared/assets/login1.png')}
             />
           </View>
           <LoginForm

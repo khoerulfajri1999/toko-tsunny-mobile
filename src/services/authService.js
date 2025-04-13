@@ -11,7 +11,7 @@ const authService = {
       });
       if (response.data.token) {
         await LocalStorage.setData('token', response.data.token);
-        
+
         return response.data.token;
       }
     } catch (error) {
@@ -20,13 +20,19 @@ const authService = {
     }
   },
 
-  // register: async (newUser) => {
-  //   await new Promise((resolve) => setTimeout(resolve, 500));
-
-  //   const createdUser = { id: users.length + 1, ...newUser };
-  //   users.push(User.fromJson(createdUser));
-  //   return createdUser;
-  // },
+  register: async (name, email, password, password_confirm) => {
+    try {
+      const response = await apiClient({
+        method: 'post',
+        url: '/api/auth/register',
+        params: { name, email, password, password_confirm },
+      });
+      return response.data
+    } catch (error) {
+      console.log('Error in login', error);
+      throw error;
+    }
+  },
 
   logout: async () => {
     await LocalStorage.removeData('token');

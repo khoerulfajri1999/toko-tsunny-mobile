@@ -10,15 +10,14 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "bold",
     color: "#333",
-    marginBottom: 15
-
+    marginTop: 10,
   },
   subTitle: {
     fontSize: 16,
     color: "gray",
     marginBottom: 30,
   },
-  registerContainer: {
+  logoutContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#333",
   },
-  registerLink: {
+  logoutLink: {
     color: "#FF8C00",
     fontWeight: "bold",
   },

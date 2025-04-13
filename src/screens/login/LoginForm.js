@@ -17,8 +17,7 @@ const LoginForm = ({
 }) => {
   return (
     <View style={styles.formContainer}>
-      <Text style={styles.appTitle}>TokoTsunny</Text>
-      <Text style={styles.subTitle}>Toko Tsunny</Text>
+      <Text style={styles.appTitle}>LOGIN</Text>
 
       <InputField
         placeholder="Email"

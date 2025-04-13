@@ -2,6 +2,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TAB_PATH } from './PathNavigator';
 import DashboardStackNavigator from './stacks/DashboardStackNavigator';
+import ProductStackNavigator from './stacks/ProductStackNavigator';
+import ProfileStackNavigator from './stacks/ProfileStackNavigator';
+import TransactionStackNavigator from './stacks/TransactionStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,9 +15,10 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName;
           if (route.name === TAB_PATH.DASHBOARD) iconName = 'home';
-        //   else if (route.name === TAB_PATH.ORDER) iconName = 'shopping-cart';
-        //   else if (route.name === TAB_PATH.PROMO) iconName = 'local-offer';
-        //   else if (route.name === TAB_PATH.PROFILE) iconName = 'person';
+          else if (route.name === TAB_PATH.PRODUCT) iconName = 'inventory';
+          else if (route.name === TAB_PATH.TRANSACTION)
+            iconName = 'receipt-long';
+          else if (route.name === TAB_PATH.PROFILE) iconName = 'account-circle';
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: '#FF8C00',
@@ -24,6 +28,21 @@ const TabNavigator = () => {
       <Tab.Screen
         name={TAB_PATH.DASHBOARD}
         component={DashboardStackNavigator}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={TAB_PATH.PRODUCT}
+        component={ProductStackNavigator}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={TAB_PATH.TRANSACTION}
+        component={TransactionStackNavigator}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={TAB_PATH.PROFILE}
+        component={ProfileStackNavigator}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
