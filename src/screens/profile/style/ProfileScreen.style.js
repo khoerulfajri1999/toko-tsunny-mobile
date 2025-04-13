@@ -1,34 +1,76 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  formContainer: {
+  container: {
     flex: 1,
-    alignItems: "center",
-    padding: 20,
+    backgroundColor: '#F8F8F8',
   },
-  appTitle: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#333",
-    marginTop: 10,
+  header: {
+    paddingVertical: 20,
+    paddingHorizontal: 15,
   },
-  subTitle: {
-    fontSize: 16,
-    color: "gray",
-    marginBottom: 30,
+  headerText: {
+    fontSize: 27,
+    fontWeight: 'bold',
   },
-  logoutContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 20,
+  profileSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  registerText: {
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 15,
+  },
+  profileInfo: {
+    flex: 1,
+  },
+  profileName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  profileEmail: {
     fontSize: 14,
-    color: "#333",
+    color: 'gray',
   },
-  logoutLink: {
-    color: "#FF8C00",
-    fontWeight: "bold",
+  menuContainer: {
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginHorizontal: 15,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
+  menuText: {
+    flex: 1,
+    fontSize: 16,
+    marginLeft: 10,
+  },
+  logoutButton: {
+    backgroundColor: '#FF3B30',
+    paddingVertical: 15,
+    marginTop: 30,
+    marginHorizontal: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  logoutText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
