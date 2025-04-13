@@ -18,8 +18,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const token = await authService.getCurrentUser();
       if (token) {
-        const profile = await userService.me(); // 🆕 ambil data dari backend
-        dispatch(setUser(profile)); // 🆕 simpan ke redux
+        const profile = await userService.me();
+        dispatch(setUser(profile)); 
         setCurrentUser(profile);
       }
     } catch (error) {

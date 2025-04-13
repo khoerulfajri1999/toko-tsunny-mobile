@@ -11,6 +11,13 @@ const ProfileScreen = ({ navigation }) => {
   const { logout } = useAuth();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const [formData, setFormData] = useState(user); 
+  
+  useEffect(() => {
+      setFormData(user);
+      console.log("halo : ", formData);
+      
+    }, [user]);
 
   const handleLogout = async () => {
     setIsModalVisible(false);
@@ -32,16 +39,16 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.profileSection}>
         <Image
           source={{
-            uri: user.image_url
-              ? user.image_url
+            uri: formData.image_url
+              ? formData.image_url
               : 'https://imgs.search.brave.com/uLARhH16ug7xgUl3msl3yHs0DCWkofOAnLVeWQ-poy0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/a2luZHBuZy5jb20v/cGljYy9tLzI1Mi0y/NTI0Njk1X2R1bW15/LXByb2ZpbGUtaW1h/Z2UtanBnLWhkLXBu/Zy1kb3dubG9hZC5w/bmc',
           }}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>
-          <Text style={styles.profileName}>{user.name}</Text>
-          <Text style={styles.profileEmail}>{user.phone_number}</Text>
-          <Text style={styles.profileEmail}>{user.email}</Text>
+          <Text style={styles.profileName}>{formData.name}</Text>
+          <Text style={styles.profileEmail}>{formData.phone_number}</Text>
+          <Text style={styles.profileEmail}>{formData.email}</Text>
         </View>
       </View>
 

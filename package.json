@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
     "expo": "~52.0.43",
+    "expo-image-picker": "^16.0.6",
     "expo-status-bar": "~2.0.1",
     "jwt-decode": "^4.0.0",
     "nativewind": "^4.1.23",

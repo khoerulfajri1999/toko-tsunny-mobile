@@ -20,9 +20,9 @@ client.interceptors.request.use(async (config) => {
   return config;
 });
 
-const apiClient = async ({ url, method, params = null }) => {
+const apiClient = async ({ url, method, params = null, headers = {} }) => {
   try {
-    const response = await client[method](url, params);
+    const response = await client[method](url, params, { headers });
     return response.data;
   } catch (error) {
     console.log('Error in apiClient', error.response?.data || error.message);
