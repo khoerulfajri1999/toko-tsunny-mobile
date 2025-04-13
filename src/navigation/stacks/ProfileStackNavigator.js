@@ -3,7 +3,6 @@ import { SCREEN_PATH } from '../PathNavigator';
 import ProfileScreen from '../../screens/profile/ProfileScreen';
 import LoginScreen from '../../screens/login/LoginScreen';
 import ChangeProfileScreen from '../../screens/profile/change-profile/ChangeProfileScreen';
-import OnFixingScreen from '../../screens/commons/OnFixingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,10 +14,6 @@ const ProfileStackNavigator = () => {
       <Stack.Screen
         name={SCREEN_PATH.CHANGE_PROFILE}
         component={ChangeProfileScreen}
-      />
-      <Stack.Screen
-        name={SCREEN_PATH.CHANGE_PASSWORD}
-        component={OnFixingScreen}
       />
     </Stack.Navigator>
   );

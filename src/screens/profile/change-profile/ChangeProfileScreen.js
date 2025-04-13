@@ -3,15 +3,11 @@ import { View, ScrollView, TouchableOpacity, Image, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ChangeProfileForm from "./ChangeProfileForm";
 import styles from "./style/ChangeProfileScreen.style";
+import { useSelector } from "react-redux";
 
 
 const ChangeProfileScreen = ({ navigation }) => {
-  const [profileData, setProfileData] = useState({
-    name: "John Doe",
-    phoneNumber: "081234567890",
-    email: "johndoe@example.com",
-    address: "Jl. Mawar No. 123, Jakarta",
-  });
+  const user = useSelector((state) => state.user.user);
 
   const handleSave = (updatedData) => {
     console.log("Profile Updated:", updatedData);
@@ -41,7 +37,7 @@ const ChangeProfileScreen = ({ navigation }) => {
         </View>
 
         {/* Change Profile Form */}
-        <ChangeProfileForm initialData={profileData} onSave={handleSave} />
+        <ChangeProfileForm initialData={user} onSave={handleSave} />
       </ScrollView>
     </View>
   );

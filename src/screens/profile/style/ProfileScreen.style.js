@@ -8,12 +8,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
   },
   header: {
-    paddingVertical: 20,
-    paddingHorizontal: 15,
+    backgroundColor: '#FF8C00',
+    paddingVertical: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   headerText: {
-    fontSize: 27,
+    fontSize: 20,
     fontWeight: 'bold',
+    color: 'white',
+    marginLeft: 15,
   },
   profileSection: {
     flexDirection: 'row',

@@ -1,14 +1,10 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { SCREEN_PATH } from '../navigation/PathNavigator';
-import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { startLoading, stopLoading } from '../store/slice/appSlice';
+import { setUser, clearUser } from '../store/slice/userSlice'; // 🆕 import action user
 import authService from '../services/authService';
+import userService from '../services/userService'; // 🆕 import
 import { navigate } from '../navigation/refNavigation';
 
 const AuthContext = createContext();
@@ -21,14 +17,13 @@ export const AuthProvider = ({ children }) => {
     dispatch(startLoading());
     try {
       const token = await authService.getCurrentUser();
-      const user = jwtDecode(token);
-      console.log('Usernya : ', user);
-
-      if (user) {
-        setCurrentUser(user);
+      if (token) {
+        const profile = await userService.me(); // 🆕 ambil data dari backend
+        dispatch(setUser(profile)); // 🆕 simpan ke redux
+        setCurrentUser(profile);
       }
     } catch (error) {
-      throw error;
+      console.log('checkAuth error:', error);
     } finally {
       dispatch(stopLoading());
     }
@@ -42,12 +37,14 @@ export const AuthProvider = ({ children }) => {
     dispatch(startLoading());
     try {
       const token = await authService.login(email, password);
-      const user = jwtDecode(token);
-      if (user) {
-        setCurrentUser(user);
+      if (token) {
+        const profile = await userService.me(); // 🆕 ambil data dari backend
+        dispatch(setUser(profile)); // 🆕 simpan ke redux
+        setCurrentUser(profile);
       }
       return true;
     } catch (error) {
+      console.log('login error:', error);
       throw error;
     } finally {
       dispatch(stopLoading());
@@ -59,9 +56,11 @@ export const AuthProvider = ({ children }) => {
     try {
       await authService.logout();
       setCurrentUser(null);
+      dispatch(clearUser()); // 🆕 bersihkan user dari redux
       navigate(SCREEN_PATH.LOGIN);
       return true;
     } catch (error) {
+      console.log('logout error:', error);
       throw error;
     } finally {
       dispatch(stopLoading());
