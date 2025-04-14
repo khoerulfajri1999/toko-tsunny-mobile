@@ -3,12 +3,12 @@ import { View, ScrollView, Text } from 'react-native';
 import styles from './ProductScreen.style';
 import { useDispatch, useSelector } from 'react-redux';
 import productService from '../../services/productService';
-import { startLoading, stopLoading } from '../../store/slice/appSlice';
 import CategoryCarousel from './categories/CategoryCarousel';
 import ProductList from './products/ProductList';
 import { ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import categoryService from '../../services/categoryService';
+import { startLoading, stopLoading } from '../../store/slice/appSlice';
 
 const ProductScreen = () => {
   const dispatch = useDispatch();

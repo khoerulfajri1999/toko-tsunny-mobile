@@ -1,6 +1,22 @@
 import apiClient from './apiClient';
 
 const productService = {
+  createProduct: async (formData) => {
+    try {
+      const response = await apiClient({
+        method: 'post',
+        url: '/api/product',
+        params: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log('Error in updating profile:', error);
+      throw error;
+    }
+  },
   getAllProduct: async () => {
     try {
       console.log('tes');

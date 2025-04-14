@@ -8,16 +8,19 @@ import { Ionicons } from "@expo/vector-icons";
 
 const ProductList = ({ products }) => {
   const navigation = useNavigation();
+  const sortedProducts = [...products].sort((a, b) => b.id - a.id);
   return (
     <View style={styles.container}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Produk</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(SCREEN_PATH.ADD_PRODUCT)}
+        >
           <Ionicons name="add-circle-outline" size={27} color="#FF8C00" />
         </TouchableOpacity>
       </View>
       <FlatList
-        data={products}
+        data={sortedProducts}
         keyExtractor={(item) => item.id.toString()}
         nestedScrollEnabled={true}
         scrollEnabled={false}

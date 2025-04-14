@@ -17,7 +17,14 @@ const ProductCard = ({ product }) => {
           {product.description.substring(0, 80)}...
         </Text>
         <Text style={styles.date}>Stok : {product.stock}</Text>
-        <Text style={styles.description}>Harga : {product.price}</Text>
+        <Text style={styles.description}>
+          Harga :{' '}
+          {new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+          }).format(product.price)}
+        </Text>
         <Text style={styles.description}>Terjual : {product.units_sold}</Text>
       </View>
     </View>
