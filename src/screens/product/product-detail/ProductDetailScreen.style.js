@@ -95,6 +95,23 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     color: '#333',
   },
+  editBottomButton: {
+    flexDirection: 'row',
+    backgroundColor: '#FF8C00',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 24,
+    alignSelf: 'center',
+  },
+  editBottomText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    marginLeft: 8,
+  },
 });
 
 export default styles;

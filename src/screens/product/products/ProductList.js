@@ -4,6 +4,7 @@ import styles from "./style/ProductList.style";
 import { useNavigation } from "@react-navigation/native";
 import { SCREEN_PATH } from "../../../navigation/PathNavigator";
 import ProductCard from "./ProductCard";
+import { Ionicons } from "@expo/vector-icons";
 
 const ProductList = ({ products }) => {
   const navigation = useNavigation();
@@ -11,9 +12,9 @@ const ProductList = ({ products }) => {
     <View style={styles.container}>
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Produk</Text>
-        {/* <TouchableOpacity>
-          <Text style={styles.seeAll}>Lihat Semua</Text>
-        </TouchableOpacity> */}
+        <TouchableOpacity>
+          <Ionicons name="add-circle-outline" size={27} color="#FF8C00" />
+        </TouchableOpacity>
       </View>
       <FlatList
         data={products}
@@ -30,6 +31,13 @@ const ProductList = ({ products }) => {
           >
             <ProductCard product={item} />
           </TouchableOpacity>
+        )}
+        ListEmptyComponent={() => (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>
+              Tidak ada produk pada kategori ini.
+            </Text>
+          </View>
         )}
         ListFooterComponent={() => <View style={{ height: 20 }} />}
       />

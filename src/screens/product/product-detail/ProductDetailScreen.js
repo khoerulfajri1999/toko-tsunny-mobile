@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './ProductDetailScreen.style';
+import { SCREEN_PATH } from '../../../navigation/PathNavigator';
+import { useFocusEffect } from '@react-navigation/native';
+import productService from '../../../services/productService';
 
 const ProductDetailScreen = ({ route, navigation }) => {
-  const { product } = route.params;
+    const { product: initialProduct } = route.params;
+    const [product, setProduct] = useState(initialProduct);
+
+    useFocusEffect(
+      useCallback(() => {
+        const fetchProduct = async () => {
+          try {
+            const updated = await productService.getProductById(
+              initialProduct.id
+            );
+            setProduct(updated);
+          } catch (error) {
+            console.error('Failed to fetch product:', error);
+          }
+        };
+
+        fetchProduct();
+      }, [initialProduct.id])
+    );
 
   return (
     <View style={styles.container}>
@@ -43,6 +64,13 @@ const ProductDetailScreen = ({ route, navigation }) => {
             <Text style={styles.infoText}>Stok: {product.stock}</Text>
             <Text style={styles.infoText}>Terjual: {product.units_sold}</Text>
           </View>
+          <TouchableOpacity
+            style={styles.editBottomButton}
+            onPress={() => navigation.navigate(SCREEN_PATH.EDIT_PRODUCT, { product })}
+          >
+            <Ionicons name="create-outline" size={20} color="#fff" />
+            <Text style={styles.editBottomText}>Edit Produk</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>

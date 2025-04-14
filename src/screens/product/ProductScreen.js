@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import styles from './ProductScreen.style';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,8 @@ import { startLoading, stopLoading } from '../../store/slice/appSlice';
 import CategoryCarousel from './categories/CategoryCarousel';
 import ProductList from './products/ProductList';
 import { ActivityIndicator } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import categoryService from '../../services/categoryService';
 
 const ProductScreen = () => {
   const dispatch = useDispatch();
@@ -15,39 +17,31 @@ const ProductScreen = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const isLoading = useSelector((state) => state.app.loading);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchProducts();
+    }, [])
+  );
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     dispatch(startLoading());
     try {
-      const response = await productService.getAllProduct();
-      setProducts(response);
-      setCategories(getCategories(response));
-      const firstCategory = getCategories(response)[0];
-      setSelectedCategoryId(firstCategory?.id || null);
+      const [productResponse, categoryResponse] = await Promise.all([
+        productService.getAllProduct(),
+        categoryService.getAllCategories(),
+      ]);
+      setProducts(productResponse);
+      setCategories(categoryResponse);
+
+      if (selectedCategoryId === null && categoryResponse.length > 0) {
+        setSelectedCategoryId(categoryResponse[0].id);
+      }
     } catch (error) {
       console.log(error);
     } finally {
       dispatch(stopLoading());
     }
-  };
-
-  const getCategories = (products) => {
-    const categoryMap = new Map();
-
-    products.forEach((item) => {
-      if (!categoryMap.has(item.category_id)) {
-        categoryMap.set(item.category_id, {
-          id: item.category_id,
-          name: item.category_name,
-        });
-      }
-    });
-
-    return Array.from(categoryMap.values());
-  };
+  }, [dispatch, selectedCategoryId]);
 
   const getFilteredProducts = () => {
     if (!selectedCategoryId) return products;
@@ -72,6 +66,7 @@ const ProductScreen = () => {
             categories={categories}
             selectedCategoryId={selectedCategoryId}
             onCategoryPress={setSelectedCategoryId}
+            onRefresh={fetchProducts}
           />
           <ProductList products={getFilteredProducts()} />
         </ScrollView>
