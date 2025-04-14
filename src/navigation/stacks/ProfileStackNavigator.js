@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SCREEN_PATH } from '../PathNavigator';
-import ProfileScreen from '../../screens/profile/ProfileScreen';
 import LoginScreen from '../../screens/login/LoginScreen';
 import ChangeProfileScreen from '../../screens/profile/change-profile/ChangeProfileScreen';
+import ProfileScreen from '../../screens/profile/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 

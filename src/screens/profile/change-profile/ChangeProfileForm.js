@@ -91,7 +91,7 @@ const ChangeProfileForm = ({ initialData, onSave, loading }) => {
       ))}
 
       <Button
-        title="Save"
+        title="Simpan"
         onPress={() => onSave(formData)}
         disabled={!isFormValid}
         loading={loading}

@@ -40,8 +40,6 @@ const ChangeProfileScreen = ({ navigation }) => {
     try {
       dispatch(startLoading())
       const result = await userService.updateUser(user.id, formData);
-      console.log(result);
-
       dispatch(setUser(result));
       navigation.goBack();
     } catch (err) {

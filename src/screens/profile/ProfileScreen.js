@@ -11,11 +11,12 @@ const ProfileScreen = ({ navigation }) => {
   const { logout } = useAuth();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const product = useSelector((state) => state.product.product);
   const [formData, setFormData] = useState(user); 
   
   useEffect(() => {
       setFormData(user);
-      console.log("halo : ", formData);
+      console.log("halo : ", user);
       
     }, [user]);
 
