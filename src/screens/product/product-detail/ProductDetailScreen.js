@@ -60,13 +60,23 @@ const ProductDetailScreen = ({ route, navigation }) => {
           </View>
           <Text style={styles.description}>{product.description}</Text>
           <View style={styles.infoBox}>
-            <Text style={styles.infoText}>Harga: Rp {product.price}</Text>
+            <Text style={styles.description}>
+              Harga :{' '}
+              {new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+              }).format(product.price)}
+            </Text>
             <Text style={styles.infoText}>Stok: {product.stock}</Text>
             <Text style={styles.infoText}>Terjual: {product.units_sold}</Text>
           </View>
+
           <TouchableOpacity
             style={styles.editBottomButton}
-            onPress={() => navigation.navigate(SCREEN_PATH.EDIT_PRODUCT, { product })}
+            onPress={() =>
+              navigation.navigate(SCREEN_PATH.EDIT_PRODUCT, { product })
+            }
           >
             <Ionicons name="create-outline" size={20} color="#fff" />
             <Text style={styles.editBottomText}>Edit Produk</Text>
