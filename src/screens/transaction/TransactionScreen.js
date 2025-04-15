@@ -8,6 +8,7 @@ import InputField from '../../shared/components/input/InputField';
 import Button from '../../shared/components/button/Button';
 import productService from '../../services/productService';
 import transactionService from '../../services/transactionService';
+import { SCREEN_PATH } from '../../navigation/PathNavigator';
 
 const TransactionFormScreen = ({ navigation }) => {
   const [formData, setFormData] = useState({
@@ -94,8 +95,16 @@ const TransactionFormScreen = ({ navigation }) => {
         })),
       };
 
-      await transactionService.createTransaction(payload);
-      Alert.alert('Sukses', 'Transaksi berhasil dibuat');
+      const response = await transactionService.createTransaction(payload);
+      Alert.alert('Sukses', 'Transaksi berhasil dibuat', [
+        {
+          text: 'OK',
+          onPress: () =>
+            navigation.navigate(SCREEN_PATH.TRANSACTION_SUMMARY, {
+              id: response.id,
+            }),
+        },
+      ]);
 
       // Reset form ke nilai awal
       setFormData({
@@ -196,6 +205,7 @@ const TransactionFormScreen = ({ navigation }) => {
                 borderRadius: 10,
                 height: 50,
                 justifyContent: 'center',
+                backgroundColor: '#F8F8F8',
               }}
             >
               <Picker

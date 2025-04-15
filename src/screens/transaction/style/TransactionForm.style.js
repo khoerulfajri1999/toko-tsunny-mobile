@@ -1,12 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  //   container: {
-  //     padding: 16,
-  //     backgroundColor: '#fff',
-  //   },
   container: {
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#fff',
     paddingBottom: 40,
   },
   label: {
