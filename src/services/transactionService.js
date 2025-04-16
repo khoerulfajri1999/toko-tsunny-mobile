@@ -26,5 +26,17 @@ const transactionService = {
       throw error;
     }
   },
+  getAllTransaction: async () => {
+    try {
+      const response = await apiClient({
+        method: 'get',
+        url: '/api/transaction?limit=999999',
+      });
+      return response.data;
+    } catch (error) {
+      console.log('Error in create transaction:', error);
+      throw error;
+    }
+  },
 };
 export default transactionService;
