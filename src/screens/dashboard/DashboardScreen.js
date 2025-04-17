@@ -44,6 +44,9 @@ const DashboardScreen = ({navigation}) => {
   const years = [currentYear - 1, currentYear, currentYear + 1];
 
   useEffect(() => {
+    fetchTransactions();
+    fetchAllProducts();
+
     const unsubscribe = navigation.addListener('focus', () => {
       fetchTransactions();
       fetchAllProducts();
@@ -52,12 +55,12 @@ const DashboardScreen = ({navigation}) => {
     return unsubscribe;
   }, [navigation]);
 
+
   const fetchTransactions = async () => {
     setLoading(true);
     try {
       const response = await transactionService.getAllTransaction();
       setTransactions(response);
-      console.log("response : ", response);
       
     } catch (error) {
       Alert.alert('Error', 'Gagal memuat data transaksi');
@@ -67,11 +70,10 @@ const DashboardScreen = ({navigation}) => {
   };
 
   const fetchAllProducts = async () => {
-    console.log("tes2");
+
     
     try {
       const response = await productService.getAllProduct();
-      console.log("products : ",response);
       const warnings = response.filter((product) => product.stock <= 5);
       setLowStockProducts(warnings);
       

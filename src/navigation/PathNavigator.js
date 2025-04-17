@@ -21,7 +21,7 @@ const TAB_PATH = {
   PRODUCT: 'Produk',
   TRANSACTION: 'Transaksi',
   PROFILE: 'Profil',
-  HOME: 'Home'
+  HOME: 'Halaman Utama'
 };
 
 export { SCREEN_PATH, TAB_PATH };

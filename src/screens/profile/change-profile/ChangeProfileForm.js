@@ -93,7 +93,6 @@ const ChangeProfileForm = ({ initialData, onSave, loading }) => {
       <Button
         title="Simpan"
         onPress={() => onSave(formData)}
-        disabled={!isFormValid}
         loading={loading}
       />
     </View>

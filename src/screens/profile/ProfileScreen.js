@@ -16,8 +16,6 @@ const ProfileScreen = ({ navigation }) => {
   
   useEffect(() => {
       setFormData(user);
-      console.log("halo : ", user);
-      
     }, [user]);
 
   const handleLogout = async () => {
