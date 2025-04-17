@@ -12,10 +12,13 @@ import { LineChart } from 'react-native-chart-kit';
 import transactionService from '../../services/transactionService';
 import styles from './style/DashboardScreen.Style';
 import productService from '../../services/productService';
+import Button from '../../shared/components/button/Button';
+import * as Print from 'expo-print';
+import * as Sharing from 'expo-sharing';
 
 const screenWidth = Dimensions.get('window').width;
 
-const DashboardScreen = () => {
+const DashboardScreen = ({navigation}) => {
   const [transactions, setTransactions] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -41,15 +44,21 @@ const DashboardScreen = () => {
   const years = [currentYear - 1, currentYear, currentYear + 1];
 
   useEffect(() => {
-    fetchTransactions();
-    fetchAllProducts();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchTransactions();
+      fetchAllProducts();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const fetchTransactions = async () => {
     setLoading(true);
     try {
       const response = await transactionService.getAllTransaction();
       setTransactions(response);
+      console.log("response : ", response);
+      
     } catch (error) {
       Alert.alert('Error', 'Gagal memuat data transaksi');
     } finally {
@@ -58,10 +67,14 @@ const DashboardScreen = () => {
   };
 
   const fetchAllProducts = async () => {
+    console.log("tes2");
+    
     try {
       const response = await productService.getAllProduct();
+      console.log("products : ",response);
       const warnings = response.filter((product) => product.stock <= 5);
       setLowStockProducts(warnings);
+      
     } catch (error) {
       console.log(error);
     }
@@ -94,12 +107,123 @@ const DashboardScreen = () => {
     return daily;
   };
 
+  const generateMonthlyReport = async () => {
+    const filtered = filterTransactions();
+    const dailyIncome = {};
+    const dailyExpense = {};
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    const getDateStr = (dateStr) => {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('id-ID', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
+    };
+
+    filtered.forEach((trx) => {
+      const date = getDateStr(trx.transaction_at);
+      dailyIncome[date] = (dailyIncome[date] || 0) + trx.income;
+      dailyExpense[date] = (dailyExpense[date] || 0) + trx.expense;
+      totalIncome += trx.income;
+      totalExpense += trx.expense;
+    });
+
+    const productMap = {};
+    const products = await productService.getAllProduct();
+    products.forEach((product) => {
+      productMap[product.id] = product.name;
+    });
+
+    let rows = filtered
+      .map((trx) => {
+        const date = getDateStr(trx.transaction_at);
+        const details = trx.details
+          .map((d) => `${productMap[d.product_id]} (Total: ${d.quantity})`)
+          .join('<br/>');
+        return `
+      <tr>
+        <td>${date}</td>
+        <td>${details}</td>
+        <td>Rp ${trx.income.toLocaleString('id-ID')}</td>
+        <td>Rp ${trx.expense.toLocaleString('id-ID')}</td>
+      </tr>
+    `;
+      })
+      .join('');
+
+    let dailyRows = Object.keys(dailyIncome)
+      .sort((a, b) => new Date(a) - new Date(b))
+      .map((date) => {
+        return `
+      <tr>
+        <td>${date}</td>
+        <td>Rp ${dailyIncome[date].toLocaleString('id-ID')}</td>
+        <td>Rp ${dailyExpense[date]?.toLocaleString('id-ID') || 0}</td>
+      </tr>
+    `;
+      })
+      .join('');
+
+    let htmlContent = `
+  <h1 style="text-align: center;">Laporan Transaksi Bulan ${
+    months[selectedMonth - 1]
+  } ${selectedYear}</h1>
+  <h2>Rincian Transaksi</h2>
+  <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; table-layout: fixed;">
+    <tr>
+      <th>Tanggal</th>
+      <th>Detail Produk</th>
+      <th>Pendapatan</th>
+      <th>Pengeluaran</th>
+    </tr>
+    ${rows}
+  </table>
+
+  <h2>Pendapatan & Pengeluaran Harian</h2>
+  <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; table-layout: fixed;">
+    <tr>
+      <th>Tanggal</th>
+      <th>Pendapatan Harian</th>
+      <th>Pengeluaran Harian</th>
+    </tr>
+    ${dailyRows}
+  </table>
+
+  <h3>Total Pendapatan: Rp ${totalIncome.toLocaleString('id-ID')}</h3>
+  <h3>Total Pengeluaran: Rp ${totalExpense.toLocaleString('id-ID')}</h3>
+  `;
+
+    const fileName = `Laporan_Transaksi_${
+      months[selectedMonth - 1]
+    }_${selectedYear}.pdf`;
+
+    try {
+      setLoading(true)
+      const { uri } = await Print.printToFileAsync({ html: htmlContent });
+      await Sharing.shareAsync(uri, {
+        dialogTitle: 'Bagikan Laporan Transaksi',
+        mimeType: 'application/pdf',
+        UTI: 'com.adobe.pdf',
+        title: fileName,
+      });
+    } catch (err) {
+      console.log('PDF generation error:', err);
+      Alert.alert('Gagal', 'Terjadi kesalahan saat membuat PDF');
+    } finally {
+      setLoading(false)
+    }
+  };
+
+
   if (loading) {
     return (
       <View
         style={[
           styles.container,
-          { justifyContent: 'center', alignItems: 'center' },
+          { justifyContent: 'center', alignItems: 'center', flex:1 },
         ]}
       >
         <ActivityIndicator size="large" color="blue" />
@@ -264,14 +388,18 @@ const DashboardScreen = () => {
                     { color: product.stock === 0 ? 'red' : 'orange' },
                   ]}
                 >
-                  {
-                    product.stock === 0 ? '0 ( Habis )' : product.stock
-                  }
+                  {product.stock === 0 ? '0 ( Habis )' : product.stock}
                 </Text>
               </View>
             ))}
           </View>
         )}
+        <Button
+          title="Export PDF Bulan Ini"
+          onPress={generateMonthlyReport}
+          loading={loading}
+          disabled={loading}
+        />
       </View>
     </ScrollView>
   );

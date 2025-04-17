@@ -92,9 +92,15 @@ const styles = StyleSheet.create({
 
   infoText: {
     fontSize: 16,
+    marginBottom: 4,
     fontWeight:'bold',
+    color: '#FF8C00',
+  },
+  infoTextPrice: {
+    fontSize: 16,
     marginBottom: 4,
     color: '#FF8C00',
+    fontWeight:'bold'
   },
   editBottomButton: {
     flexDirection: 'row',

@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   warningContainer: {
-    marginTop: 20,
     padding: 15,
     backgroundColor: '#fff3cd',
     borderRadius: 10,

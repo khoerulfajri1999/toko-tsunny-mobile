@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity, View ,Text} from 'react-native';
+import { Image, TouchableOpacity, View, Text } from 'react-native';
 import styles from './style/ProductForm.style';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -26,7 +26,7 @@ const ProductForm = ({ onSave, loading }) => {
   const getAllCategories = async () => {
     try {
       const response = await categoryService.getAllCategories();
-      setCategories(response); // Menyimpan kategori di state
+      setCategories(response);
     } catch (error) {
       console.log(error);
     }
@@ -92,18 +92,21 @@ const ProductForm = ({ onSave, loading }) => {
         { label: 'Stok', field: 'stock', keyboardType: 'numeric' },
         { label: 'Harga', field: 'price', keyboardType: 'numeric' },
       ].map(({ label, field, keyboardType }) => (
-        <InputField
-          key={field}
-          label={label}
-          placeholder={`Masukkan ${label}`}
-          value={formData[field]}
-          onChangeText={(text) => handleChange(field, text)}
-          error={errors[field]}
-          keyboardType={keyboardType}
-        />
+        <View key={field}>
+          <Text style={styles.label}>{label} : </Text>
+          <InputField
+            label={label}
+            placeholder={`Masukkan ${label}`}
+            value={formData[field]}
+            onChangeText={(text) => handleChange(field, text)}
+            error={errors[field]}
+            keyboardType={keyboardType}
+          />
+        </View>
       ))}
 
       {/* Dropdown untuk kategori */}
+      <Text style={styles.label}>Kategori : </Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={formData.category_id}

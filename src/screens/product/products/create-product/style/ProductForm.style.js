@@ -47,6 +47,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 10,
   },
+  label: {
+    fontSize: 14,
+    marginBottom: 6,
+    fontWeight: 'bold',
+  },
 });
 
 export default styles;

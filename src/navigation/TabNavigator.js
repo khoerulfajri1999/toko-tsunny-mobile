@@ -5,6 +5,7 @@ import DashboardStackNavigator from './stacks/DashboardStackNavigator';
 import ProductStackNavigator from './stacks/ProductStackNavigator';
 import ProfileStackNavigator from './stacks/ProfileStackNavigator';
 import TransactionStackNavigator from './stacks/TransactionStackNavigator';
+import HomeStackNavigator from './stacks/HomeStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +17,7 @@ const TabNavigator = () => {
           let iconName;
           if (route.name === TAB_PATH.DASHBOARD) iconName = 'home';
           else if (route.name === TAB_PATH.PRODUCT) iconName = 'inventory';
+          else if (route.name === TAB_PATH.HOME) iconName = 'inventory';
           else if (route.name === TAB_PATH.TRANSACTION)
             iconName = 'receipt-long';
           else if (route.name === TAB_PATH.PROFILE) iconName = 'account-circle';
@@ -28,6 +30,11 @@ const TabNavigator = () => {
       <Tab.Screen
         name={TAB_PATH.DASHBOARD}
         component={DashboardStackNavigator}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={TAB_PATH.HOME}
+        component={HomeStackNavigator}
         options={{ headerShown: false }}
       />
       <Tab.Screen

@@ -7,25 +7,25 @@ import { useFocusEffect } from '@react-navigation/native';
 import productService from '../../../services/productService';
 
 const ProductDetailScreen = ({ route, navigation }) => {
-    const { product: initialProduct } = route.params;
-    const [product, setProduct] = useState(initialProduct);
+  const { product: initialProduct } = route.params;
+  const [product, setProduct] = useState(initialProduct);
 
-    useFocusEffect(
-      useCallback(() => {
-        const fetchProduct = async () => {
-          try {
-            const updated = await productService.getProductById(
-              initialProduct.id
-            );
-            setProduct(updated);
-          } catch (error) {
-            console.error('Failed to fetch product:', error);
-          }
-        };
+  useFocusEffect(
+    useCallback(() => {
+      const fetchProduct = async () => {
+        try {
+          const updated = await productService.getProductById(
+            initialProduct.id
+          );
+          setProduct(updated);
+        } catch (error) {
+          console.error('Failed to fetch product:', error);
+        }
+      };
 
-        fetchProduct();
-      }, [initialProduct.id])
-    );
+      fetchProduct();
+    }, [initialProduct.id])
+  );
 
   return (
     <View style={styles.container}>
@@ -60,7 +60,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
           </View>
           <Text style={styles.description}>{product.description}</Text>
           <View style={styles.infoBox}>
-            <Text style={styles.infoText}>
+            <Text style={styles.infoTextPrice}>
               Harga :{' '}
               {new Intl.NumberFormat('id-ID', {
                 style: 'currency',
@@ -71,16 +71,6 @@ const ProductDetailScreen = ({ route, navigation }) => {
             <Text style={styles.infoText}>Stok: {product.stock}</Text>
             <Text style={styles.infoText}>Terjual: {product.units_sold}</Text>
           </View>
-
-          <TouchableOpacity
-            style={styles.editBottomButton}
-            onPress={() =>
-              navigation.navigate(SCREEN_PATH.EDIT_PRODUCT, { product })
-            }
-          >
-            <Ionicons name="create-outline" size={20} color="#fff" />
-            <Text style={styles.editBottomText}>Edit Produk</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>

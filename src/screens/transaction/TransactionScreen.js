@@ -27,6 +27,8 @@ const TransactionFormScreen = ({ navigation }) => {
   const getAllProducts = async () => {
     try {
       const response = await productService.getAllProduct();
+      console.log("response 2 ", response);
+      
       setProducts(response);
     } catch (error) {
       console.log(error);
@@ -219,10 +221,15 @@ const TransactionFormScreen = ({ navigation }) => {
                 {products.map((product) => (
                   <Picker.Item
                     key={product.id}
-                    label={`${product.name} (Rp ${product.price.toLocaleString(
-                      'id-ID'
-                    )})`}
+                    label={
+                      product.stock === 0
+                        ? `${product.name} - Stok Habis`
+                        : `${product.name} (Rp ${product.price.toLocaleString(
+                            'id-ID'
+                          )})`
+                    }
                     value={product.id}
+                    enabled={product.stock > 0}
                   />
                 ))}
               </Picker>
