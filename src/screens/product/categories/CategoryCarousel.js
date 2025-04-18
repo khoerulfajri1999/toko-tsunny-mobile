@@ -23,7 +23,10 @@ const CategoryCarousel = ({
     name: '',
   });
 
-  const extendedCategories = [{ id: null, name: 'Lihat Semua' }, ...categories];
+  const extendedCategories = [
+    { id: null, name: 'Lihat Semua' },
+    ...(categories || []),
+  ];
 
   const handleCreateCategory = async () => {
     if (!categoryName.trim()) {

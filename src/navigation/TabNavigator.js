@@ -23,7 +23,6 @@ const TabNavigator = () => {
     try {
       const response = await authService.getCurrentUser();
       const decoded = jwtDecode(response);
-      console.log('tes token : ', decoded.role);
       setRole(decoded.role);
     } catch (error) {
       console.log(error);

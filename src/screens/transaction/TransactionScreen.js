@@ -27,8 +27,6 @@ const TransactionFormScreen = ({ navigation }) => {
   const getAllProducts = async () => {
     try {
       const response = await productService.getAllProduct();
-      console.log("response 2 ", response);
-      
       setProducts(response);
     } catch (error) {
       console.log(error);
@@ -130,7 +128,7 @@ const TransactionFormScreen = ({ navigation }) => {
 
 
   const calculateSubtotal = (productId, quantity) => {
-    const product = products.find((p) => p.id === parseInt(productId));
+    const product = (products || []).find((p) => p.id === parseInt(productId));
     if (!product || isNaN(quantity)) return 0;
     return product.price * quantity;
   };
@@ -218,7 +216,7 @@ const TransactionFormScreen = ({ navigation }) => {
                 style={{ height: 60, width: '100%' }}
               >
                 <Picker.Item label="Pilih Produk" value="" />
-                {products.map((product) => (
+                {(products || []).map((product) => (
                   <Picker.Item
                     key={product.id}
                     label={

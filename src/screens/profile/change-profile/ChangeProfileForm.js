@@ -55,7 +55,7 @@ const ChangeProfileForm = ({ initialData, onSave, loading }) => {
             uri:
               formData.image?.uri ||
               user.image_url ||
-              'https://via.placeholder.com/100',
+              'https://imgs.search.brave.com/uLARhH16ug7xgUl3msl3yHs0DCWkofOAnLVeWQ-poy0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/a2luZHBuZy5jb20v/cGljYy9tLzI1Mi0y/NTI0Njk1X2R1bW15/LXByb2ZpbGUtaW1h/Z2UtanBnLWhkLXBu/Zy1kb3dubG9hZC5w/bmc',
           }}
           style={styles.profileImage}
         />

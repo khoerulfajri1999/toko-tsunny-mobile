@@ -19,7 +19,6 @@ const productService = {
   },
   getAllProduct: async () => {
     try {
-      console.log('tes');
 
       const response = await apiClient({
         method: 'get',

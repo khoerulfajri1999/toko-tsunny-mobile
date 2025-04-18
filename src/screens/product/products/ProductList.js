@@ -8,7 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const ProductList = ({ products }) => {
   const navigation = useNavigation();
-  const sortedProducts = [...products].sort((a, b) => b.id - a.id);
+  const sortedProducts = [...(products || [])].sort((a, b) => b.id - a.id);
   return (
     <View style={styles.container}>
       <View style={styles.sectionHeader}>

@@ -49,7 +49,6 @@ const RegisterScreen = ({ navigation }) => {
   }, [formData, errors]);
 
   const handleRegister = async () => {
-    console.log("tes");
     if (!isFormValid) {
       Alert.alert(
         'Register Gagal',

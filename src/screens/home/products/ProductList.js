@@ -7,7 +7,8 @@ import ProductCard from './ProductCard';
 
 const ProductList = ({ products }) => {
   const navigation = useNavigation();
-  const sortedProducts = [...products].sort((a, b) => b.id - a.id);
+const sortedProducts = [...(products || [])].sort((a, b) => b.id - a.id);
+
 
   return (
     <View style={styles.container}>

@@ -114,7 +114,7 @@ const ProductForm = ({ onSave, loading }) => {
           style={styles.picker}
         >
           <Picker.Item label="Pilih Kategori" value="" />
-          {categories.map((category) => (
+          {(categories || []).map((category) => (
             <Picker.Item
               key={category.id}
               label={category.name}

@@ -13,7 +13,11 @@ const CategoryCarousel = ({
   selectedCategoryId,
   onRefresh,
 }) => {
-  const extendedCategories = [{ id: null, name: 'Lihat Semua' }, ...categories];
+  const extendedCategories = [
+    { id: null, name: 'Lihat Semua' },
+    ...(categories || []),
+  ];
+
 
   return (
     <View>

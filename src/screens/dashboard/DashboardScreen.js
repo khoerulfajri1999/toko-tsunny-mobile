@@ -90,7 +90,7 @@ const DashboardScreen = ({navigation}) => {
   };
 
   const filterTransactions = () => {
-    return transactions.filter((trx) => {
+    return (transactions || []).filter((trx) => {
       const date = new Date(trx.transaction_at);
       return (
         date.getFullYear() === selectedYear &&
@@ -98,6 +98,7 @@ const DashboardScreen = ({navigation}) => {
       );
     });
   };
+
 
   const generateDailyData = (type) => {
     const daily = Array(31).fill(0);
